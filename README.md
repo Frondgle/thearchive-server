@@ -1,7 +1,7 @@
 # The Sonatore Archive Server
 
 
-# In loving emo memory of Alex Cheng
+## In loving emo memory of Alex Cheng
 ### Concept and Aesthetic driven by
 #### Daley 
 #### Jorge
