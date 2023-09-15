@@ -1,0 +1,18 @@
+[
+  {
+      "model": "thearchiveapi.fan",
+      "pk": 1,
+      "fields": {
+          "uid": 1,
+          "username": "Me"
+      }
+  },
+  {
+    "model": "thearchiveapi.fan",
+    "pk": 2,
+    "fields": {
+        "uid": 2,
+        "username": "You"
+    }
+}
+]
