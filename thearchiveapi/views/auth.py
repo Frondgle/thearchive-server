@@ -20,7 +20,8 @@ def check_user(request):
     if fan is not None:
         data = {
             'id': fan.id,
-            'uid': fan.uid
+            'uid': fan.uid,
+            'username': fan.username
         }
         return Response(data)
     else:
@@ -38,7 +39,8 @@ def register_user(request):
     '''
 
     fan = Fan.objects.create(
-        uid=request.data['uid']
+        uid=request.data['uid'],
+        username=request.data['username']
     )
 
     # Return the fan info to the client
