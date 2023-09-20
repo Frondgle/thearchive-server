@@ -46,6 +46,7 @@ def register_user(request):
     # Return the fan info to the client
     data = {
         'id': fan.id,
-        'uid': fan.uid
+        'uid': fan.uid,
+        'username': fan.username
     }
     return Response(data)
