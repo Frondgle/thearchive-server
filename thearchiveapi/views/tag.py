@@ -9,6 +9,19 @@ from thearchiveapi.models import Tag
 class TagView(ViewSet):
     """the sonatore archive Tag view"""
 
+    def create(self, request):
+        """Handle POST operations
+
+        Returns
+            Response -- JSON serialized tag instance
+        """
+
+        new_tag = Tag.objects.create(
+            category=request.data["category"]
+        )
+        serializer = TagSerializer(new_tag)
+        return Response(serializer.data)
+
     def retrieve(self, request, pk):
         """Handle GET requests for single tag
 
