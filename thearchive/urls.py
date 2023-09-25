@@ -17,10 +17,11 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
-from thearchiveapi.views import register_user, check_user, TagView
+from thearchiveapi.views import register_user, check_user, TagView, ArtView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'tags', TagView, 'tag')
+router.register(r'art', ArtView, 'art')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

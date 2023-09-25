@@ -1,10 +1,8 @@
 """View module for handling requests about Tags"""
-# from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from thearchiveapi.models import Tag
-
 
 class TagView(ViewSet):
     """the sonatore archive Tag view"""
