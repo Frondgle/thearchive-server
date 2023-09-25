@@ -8,3 +8,4 @@ python3 manage.py migrate thearchiveapi
 python3 manage.py loaddata fans
 python3 manage.py loaddata tags
 python3 manage.py loaddata art
+python3 manage.py loaddata arttags
