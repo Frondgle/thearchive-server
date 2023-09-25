@@ -1,0 +1,26 @@
+[
+  {
+    "model": "thearchiveapi.arttag",
+    "pk": 1,
+    "fields": {
+      "art": 1,
+      "tag": 1
+    }
+  },
+  {
+    "model": "thearchiveapi.arttag",
+    "pk": 2,
+    "fields": {
+      "art": 1,
+      "tag": 2
+    }
+  },
+  {
+    "model": "thearchiveapi.arttag",
+    "pk": 3,
+    "fields": {
+      "art": 2,
+      "tag": 2
+    }
+  }
+]
