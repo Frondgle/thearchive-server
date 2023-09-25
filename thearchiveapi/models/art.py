@@ -14,4 +14,5 @@ class Art(models.Model):
     date_created = models.IntegerField()
     film_type = models.CharField(max_length=50)
     malfunction = models.BooleanField(default=False)
-    tags = models.ManyToManyField('Tag', related_name='art', blank=True)
+    tags = models.ManyToManyField(
+        'Tag', through='ArtTag', related_name='art', blank=True)

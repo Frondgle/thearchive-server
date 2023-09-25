@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from thearchiveapi.models import Art, Fan
 
+
 class ArtView(ViewSet):
     """the sonatore archive Art ViewSets"""
 
@@ -27,14 +28,9 @@ class ArtView(ViewSet):
             Response -- JSON serialized list of arts
         """
         arts = Art.objects.all()
-
-        tag = request.query_params.get('tag', None)
-        print('tag', tag)
-        if tag is not None:
-            arts = arts.filter(tag=tag)
-
         serializer = ArtSerializer(arts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ArtFanSerializer(serializers.ModelSerializer):
     """JSON serializer for Fan
@@ -43,25 +39,32 @@ class ArtFanSerializer(serializers.ModelSerializer):
         model = Fan
         fields = ('id', 'uid', 'username')
 
+
 class ArtSerializer(serializers.ModelSerializer):
     """JSON serializer for Art
     """
     # fan = ArtFanSerializer(many=False)
+    tags = serializers.SerializerMethodField()
+
     class Meta:
         model = Art
         fields = (
-            'pic', 
-            'title', 
-            'code', 
-            'style', 
-            'location', 
-            'description', 
-            'color', 
-            'frame_type', 
-            'mods', 
-            'date_created', 
-            'film_type', 
-            'malfunction', 
-            # 'fan', 
-            'tag'
-            )
+            'pic',
+            'title',
+            'code',
+            'style',
+            'location',
+            'description',
+            'color',
+            'frame_type',
+            'mods',
+            'date_created',
+            'film_type',
+            'malfunction',
+            # 'fan',
+            'tags'
+        )
+
+    def get_tags(self, obj):
+        # Extract and serialize tag category names
+        return [tag.category for tag in obj.tags.all()]
