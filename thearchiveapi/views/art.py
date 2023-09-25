@@ -46,7 +46,7 @@ class ArtFanSerializer(serializers.ModelSerializer):
 class ArtSerializer(serializers.ModelSerializer):
     """JSON serializer for Art
     """
-    fan = ArtFanSerializer(many=False)
+    # fan = ArtFanSerializer(many=False)
     class Meta:
         model = Art
         fields = (
@@ -62,6 +62,6 @@ class ArtSerializer(serializers.ModelSerializer):
             'date_created', 
             'film_type', 
             'malfunction', 
-            'fan', 
+            # 'fan', 
             'tag'
             )

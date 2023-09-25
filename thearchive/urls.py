@@ -21,7 +21,7 @@ from thearchiveapi.views import register_user, check_user, TagView, ArtView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'tags', TagView, 'tag')
-router.register(r'arts', ArtView, 'art')
+router.register(r'art', ArtView, 'art')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
