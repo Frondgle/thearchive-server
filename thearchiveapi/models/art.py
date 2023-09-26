@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Art(models.Model):
-    #image = models.ImageField(upload_to='pics/', null=True, blank=True)
+    pic = models.ImageField(upload_to='pics/', null=True, blank=True)
     title = models.CharField(max_length=50)
     code = models.CharField(max_length=50)
     style = models.CharField(max_length=50)
