@@ -3,6 +3,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from thearchiveapi.models import Art, Fan
+from cloudinary.models import CloudinaryField
+# from cloudinary import CloudinaryImage
 
 
 class ArtView(ViewSet):
@@ -30,6 +32,10 @@ class ArtView(ViewSet):
         arts = Art.objects.all()
         serializer = ArtSerializer(arts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def upload(file, **options):
+    #     return cloudinary.uploader.upload(file, **options)
+
 
 
 class ArtFanSerializer(serializers.ModelSerializer):
