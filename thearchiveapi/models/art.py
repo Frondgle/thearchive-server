@@ -1,8 +1,10 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Art(models.Model):
-    pic = models.ImageField(upload_to='pics/', null=True, blank=True)
+    # pic = models.ImageField(upload_to='pics/', null=True, blank=True)
+    pic = CloudinaryField('pic')
     title = models.CharField(max_length=50)
     code = models.CharField(max_length=50)
     style = models.CharField(max_length=50)
@@ -11,7 +13,7 @@ class Art(models.Model):
     color = models.BooleanField(default=True)
     frame_type = models.CharField(max_length=50)
     mods = models.BooleanField(default=False)
-    date_created = models.IntegerField()
+    date_created = models.DateField()
     film_type = models.CharField(max_length=50)
     malfunction = models.BooleanField(default=False)
     tags = models.ManyToManyField(

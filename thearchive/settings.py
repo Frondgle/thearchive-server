@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # import cloudinary_storage
 # import django_on_heroku
 
@@ -22,9 +24,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
 }
-
-import cloudinary.uploader
-import cloudinary.api
 
 # url doc: https://cloudinary.com/documentation/django_integration
 # CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
