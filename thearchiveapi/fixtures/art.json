@@ -12,7 +12,7 @@
           "color": true,
           "frame_type": "none",
           "mods": false,
-          "date_created": 2020,
+          "date_created": "2020-12-02",
           "film_type": "SX-70",
           "malfunction": false
       }
@@ -30,7 +30,7 @@
         "color": true,
         "frame_type": "White",
         "mods": false,
-        "date_created": 2021,
+        "date_created": "2020-11-12",
         "film_type": "SLR 680",
         "malfunction": false
       }
