@@ -1,4 +1,4 @@
-"""View module for handling requests about Arts"""
+"""View module for handling requests about Art"""
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
@@ -24,10 +24,10 @@ class ArtView(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def list(self, request):
-        """Handle GET/List requests to get All Arts
-        and filter Arts by tag
+        """Handle GET/List requests to get All Art
+        and filter Art by tag
         Returns:
-            Response -- JSON serialized list of arts
+            Response -- JSON serialized list of art
         """
         arts = Art.objects.all()
         serializer = ArtSerializer(arts, many=True)
