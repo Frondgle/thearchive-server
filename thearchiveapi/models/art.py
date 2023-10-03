@@ -1,11 +1,11 @@
 from django.db import models
-from .tag import Tag
 from cloudinary.models import CloudinaryField
+from .tag import Tag
 
 
 class Art(models.Model):
     # pic = models.ImageField(upload_to='pics/', null=True, blank=True)
-    pic = CloudinaryField('pic')
+    pic = CloudinaryField('pic', folder='the-archive/')
     title = models.CharField(max_length=50)
     code = models.CharField(max_length=50)
     style = models.CharField(max_length=50)
@@ -22,7 +22,9 @@ class Art(models.Model):
 
     # @property
     # def circle_image(self):
-    #     return CloudinaryImage(self.image.name).build_url(width=256, height=256, radius="max", gravity="faces", crop="fill", cloud_name=os.environ.get("CLOUD_NAME"))
+    #     return CloudinaryImage(self.image.name).build_url(width=256,
+    #               height=256, radius="max", gravity="faces",
+    #               crop="fill", cloud_name=os.environ.get("CLOUD_NAME"))
 
     # @property
     # def is_complete(self):
