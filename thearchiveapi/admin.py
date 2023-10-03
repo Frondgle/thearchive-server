@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Art, Tag
+from .forms import ArtForm
 
 # Register your models here.
 
@@ -9,8 +10,11 @@ admin.site.register(Tag)
 
 @admin.register(Art)
 class ArtAdmin(admin.ModelAdmin):
+    form = ArtForm
     list_display = ('title', 'code', 'style', 'location', 'description', 'color',
-                    'frame_type', 'mods', 'date_created', 'film_type', 'malfunction', 'get_tags')
+                    'frame_type', 'mods', 'date_created', 'film_type', 'malfunction', 'display_tags')
+    list_filter = ('tags',)  # Add this to filter by tags
 
-    def get_tags(self, instance):
-        return [tag.name for tag in instance.tags.all()]
+    def display_tags(self, instance):
+        return ", ".join([tag.category for tag in instance.tags.all()])
+    display_tags.short_description = 'Tags'  # Set the column name in the admin
