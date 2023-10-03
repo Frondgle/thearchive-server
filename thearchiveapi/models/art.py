@@ -1,4 +1,5 @@
 from django.db import models
+from .tag import Tag
 from cloudinary.models import CloudinaryField
 
 
@@ -17,7 +18,7 @@ class Art(models.Model):
     film_type = models.CharField(max_length=50)
     malfunction = models.BooleanField(default=False)
     tags = models.ManyToManyField(
-        'Tag', through='ArtTag', related_name='art', blank=True)
+        Tag, through='ArtTag', related_name='art', blank=True)
 
     # @property
     # def circle_image(self):

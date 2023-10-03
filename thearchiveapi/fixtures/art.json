@@ -1,38 +1,38 @@
 [
   {
-      "model": "thearchiveapi.art",
-      "pk": 1,
-      "fields": {
-          "pic": "https://img.rawpixel.com/private/static/images/website/2022-05/sk9791-image-kwvuja96.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=13500e5125cd13300ba36ed88517f83e",
-          "title": "If you love me",
-          "code": "PBA0071",
-          "style": "Abstract",
-          "location": "Living Room",
-          "description": "Painting in frame blurry",
-          "color": true,
-          "frame_type": "none",
-          "mods": false,
-          "date_created": 2020,
-          "film_type": "SX-70",
-          "malfunction": false
-      }
+    "model": "thearchiveapi.art",
+    "pk": 1,
+    "fields": {
+      "pic": "image/upload/v1696349588/asagagbjnwtferybift1.jpg",
+      "title": "Eric Bass",
+      "code": "Code Blue",
+      "style": "Posed",
+      "location": "Legion",
+      "description": "Eric Plays the Bass",
+      "color": true,
+      "frame_type": "None",
+      "mods": false,
+      "date_created": "2023-10-03",
+      "film_type": "Digital",
+      "malfunction": false
+    }
   },
   {
     "model": "thearchiveapi.art",
     "pk": 2,
     "fields": {
-        "pic": "https://www.publicdomainpictures.net/pictures/320000/nahled/background-image.png",
-        "title": "Run",
-        "code": "PBA0001",
-        "style": "Emotional",
-        "location": "Nashville",
-        "description": "City in repose",
-        "color": true,
-        "frame_type": "White",
-        "mods": false,
-        "date_created": 2021,
-        "film_type": "SLR 680",
-        "malfunction": false
-      }
+      "pic": "image/upload/v1696349588/nzsgoxhvoj0i5jc9xufe.png",
+      "title": "AJ & Friend",
+      "code": "Code Red",
+      "style": "They got it!",
+      "location": "A Show",
+      "description": "Two friends having a good time",
+      "color": true,
+      "frame_type": "None",
+      "mods": false,
+      "date_created": "2023-10-03",
+      "film_type": "Polaroid",
+      "malfunction": false
+    }
   }
 ]
