@@ -22,11 +22,11 @@ import cloudinary.api
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
 
 # url doc: https://cloudinary.com/documentation/django_integration
-# CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

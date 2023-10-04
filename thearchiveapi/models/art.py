@@ -5,9 +5,8 @@ from .tag import Tag
 
 
 class Art(models.Model):
-    # pic = models.ImageField(upload_to='pics/', null=True, blank=True)
     pic = CloudinaryField('pic', folder='the-archive/')
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, null=True, blank=True)
     code = models.CharField(max_length=50)
     style = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
@@ -15,20 +14,16 @@ class Art(models.Model):
     color = models.BooleanField(default=True)
     frame_type = models.CharField(max_length=50)
     mods = models.BooleanField(default=False)
-    date_created = models.DateField()
+    date_created = models.DateField(null=True, blank=True)
     film_type = models.CharField(max_length=50)
     malfunction = models.BooleanField(default=False)
     tags = models.ManyToManyField(
         Tag, through='ArtTag', related_name='art', blank=True)
 
-
     def delete(self, *args, **kwargs):
         # Delete the Cloudinary image associated with this Art object
         if self.pic:
-            # include folder name in the public_id
-            open_id = f'the-archive/{self.pic.public_id}'
-            destroy(open_id)
-            #destroy(self.pic.public_id)
+            destroy(self.pic.public_id)
         super(Art, self).delete(*args, **kwargs)
 
     # @property
