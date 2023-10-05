@@ -20,6 +20,9 @@ class Art(models.Model):
     tags = models.ManyToManyField(
         Tag, through='ArtTag', related_name='art', blank=True)
 
+    # def __str__(self):
+    #     return str(self.title or self.pk)
+
     def delete(self, *args, **kwargs):
         # Delete the Cloudinary image associated with this Art object
         if self.pic:

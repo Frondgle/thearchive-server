@@ -4,7 +4,7 @@ from .forms import ArtForm
 
 # Register your models here.
 
-# admin.site.register(Art)
+admin.site.register(Art)
 admin.site.register(Tag)
 
 

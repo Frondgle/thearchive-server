@@ -28,7 +28,7 @@ CLOUDINARY_STORAGE = {
 
 # url doc: https://cloudinary.com/documentation/django_integration
 
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
