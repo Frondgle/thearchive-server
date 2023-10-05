@@ -5,6 +5,7 @@ from cloudinary import api
 from thearchiveapi.models import Art
 
 class Command(BaseCommand):
+    # python manage.py batch_upload_images
     help = 'Batch upload images from Cloudinary'
 
     def handle(self, *args, **options):
