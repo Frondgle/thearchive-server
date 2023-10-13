@@ -12,6 +12,7 @@ django-cors-headers = "==3.13.0"
 pylint-django = "==2.5.3"
 gunicorn = "*"
 django-on-heroku = "*"
+cloudinary = "*"
 
 [dev-packages]
 
