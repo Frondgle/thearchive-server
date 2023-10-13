@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import django_on_heroku
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -154,3 +155,10 @@ CORS_ORIGIN_WHITELIST = (
 FIXTURE_DIRS = [
     '/thearchiveapi/fixtures/'
 ]
+
+# Activate Django-Heroku
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+django_on_heroku.settings(locals())
