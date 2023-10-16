@@ -10,6 +10,9 @@ pylint = "==2.15.5"
 djangorestframework = "==3.14.0"
 django-cors-headers = "==3.13.0"
 pylint-django = "==2.5.3"
+gunicorn = "*"
+django-on-heroku = "*"
+cloudinary = "*"
 
 [dev-packages]
 
