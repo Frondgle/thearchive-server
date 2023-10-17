@@ -17,7 +17,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import cloudinary_storage
-import django_on_heroku
+# import django_on_heroku
 
 # Cloudinary Settings
 CLOUDINARY_STORAGE = {
