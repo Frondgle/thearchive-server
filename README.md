@@ -6,5 +6,5 @@
 #### Daley 
 #### Jorge
 ### App by:
-#### [A.J. Gonzalez](https://github.com/AngieMGonzalez)
+#### [A.J. Gonzalez](https://github.com/gonzalez-aj)
 #### [Eric L Frey](https://github.com/ericlfrey)
