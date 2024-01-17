@@ -6,16 +6,16 @@ from .tag import Tag
 
 class Art(models.Model):
     pic = CloudinaryField('pic', folder='the-archive/')
-    title = models.CharField(max_length=50, null=True, blank=True)
-    code = models.CharField(max_length=50)
-    style = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
-    description = models.CharField(max_length=100)
+    title = models.CharField(max_length=250, null=True, blank=True)
+    code = models.CharField(max_length=100)
+    style = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    description = models.CharField(max_length=400)
     color = models.BooleanField(default=True)
-    frame_type = models.CharField(max_length=50)
+    frame_type = models.CharField(max_length=100)
     mods = models.BooleanField(default=False)
     date_created = models.DateField(null=True, blank=True)
-    film_type = models.CharField(max_length=50)
+    film_type = models.CharField(max_length=100)
     malfunction = models.BooleanField(default=False)
     tags = models.ManyToManyField(
         Tag, through='ArtTag', related_name='art', blank=True)
