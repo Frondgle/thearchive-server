@@ -55,6 +55,7 @@ class ArtSerializer(serializers.ModelSerializer):
     class Meta:
         model = Art
         fields = (
+            'id',
             'pic',
             'title',
             'code',
