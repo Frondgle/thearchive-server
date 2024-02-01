@@ -20,7 +20,7 @@ class TagView(ViewSet):
             # if tag already exists, return error response
             return Response({'message': 'Tag already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # if tag is truly new, then create a new tag 
+        # if tag is truly new, then creates a new tag 
         new_tag = Tag.objects.create(
             category=request.data["category"]
         )
