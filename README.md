@@ -12,7 +12,7 @@ emosurrealism lives on
 <a href ="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"><img style="margin:10px" src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>  
 </div>
 
-* Media stored on Cloudinary
+* Also, shout out to Cloudinary
 
 #### Concept and Aesthetic driven by
 * Daley 

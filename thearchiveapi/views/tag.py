@@ -13,7 +13,14 @@ class TagView(ViewSet):
         Returns
             Response -- JSON serialized tag instance
         """
+        # checks if tag already exists
+        existing_tag = Tag.objects.filter(category=request.data["category"]).first()
 
+        if existing_tag is not None:
+            # if tag already exists, return error response
+            return Response({'message': 'Tag already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # if tag is truly new, then creates a new tag 
         new_tag = Tag.objects.create(
             category=request.data["category"]
         )
