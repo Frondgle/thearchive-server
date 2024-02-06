@@ -7,7 +7,7 @@ class Tag(models.Model):
 
     class Meta: 
         constraints = [
-            models.UniqueConstraint(Lower('category'), name='unique_tag')
+            models.UniqueConstraint(Lower('category'), name='unique_lower_category')
         ]
 
     def __str__(self):
