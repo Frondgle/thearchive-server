@@ -14,18 +14,18 @@ class TagView(ViewSet):
             Response -- JSON serialized tag instance
         """
         # checks if tag already exists
-        existing_tag = Tag.objects.filter(category=request.data["category"]).first()
+        existing_tag = Tag.objects.filter(category__iexact=request.data["category"]).first()
 
-        if existing_tag is not None:
+        if existing_tag:
             # if tag already exists, return error response
             return Response({'message': 'Tag already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # if tag is truly new, then creates a new tag 
+        # if tag is uniquely new (not case-sensitive), then create new tag 
         new_tag = Tag.objects.create(
             category=request.data["category"]
         )
         serializer = TagSerializer(new_tag)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk):
         """Handle GET requests for single tag
