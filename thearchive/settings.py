@@ -153,7 +153,6 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:3000',
     'https://thesonatorearchive.org',
     'https://the-sonatore-archive-client-08df369abde2.herokuapp.com'
-    'https://the-sonatore-archive-840804772ccc.herokuapp.com'
 )
 
 FIXTURE_DIRS = [
