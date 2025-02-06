@@ -75,8 +75,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# only need CORS_ORIGIN_WHITELIST or CORS_ALLOWED_ORIGINS - allowed is preferred for django 3.2+
+# to allow access for all domains, set CORS_ORIGIN_ALLOW_ALL to True
+# https://www.geeksforgeeks.org/how-to-enable-cors-headers-in-your-django-project/#
+
+CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ALLOWED_ORIGINS = [
-    "https://the-sonatore-archive-client-08df369abde2.herokuapp.com"
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://thesonatorearchive.org',
+    'https://the-sonatore-archive-client-08df369abde2.herokuapp.com',
+    'https://the-sonatore-archive-840804772ccc.herokuapp.com'
 ]
 
 CORS_ALLOW_METHODS = [
@@ -159,14 +169,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://thesonatorearchive.org',
-    'https://the-sonatore-archive-client-08df369abde2.herokuapp.com',
-    'https://the-sonatore-archive-840804772ccc.herokuapp.com'
-)
 
 FIXTURE_DIRS = [
     '/thearchiveapi/fixtures/'
