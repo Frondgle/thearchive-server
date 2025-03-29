@@ -23,3 +23,18 @@ In loving memory of emosurrealist Alex Cheng. Emosurrealism lives on. ♡
 * [A.J. Gonzalez](https://github.com/gonzalez-aj)
 * [Eric L Frey](https://github.com/ericlfrey)
 * [Charles Bridgers IV](https://github.com/SeaForeEx)
+
+#### Steps to deploy changes
+- git checkout -b branch-name
+- make changes to branch-name
+- git add .
+- git commit -m "message"
+- git push origin branch-name
+- cmd click GitHub link
+- bypass rules and merge (for now)
+- git checkout main
+- git pull origin main
+- git fetch origin deploy (if you don't have deploy branch yet)
+- git checkout deploy
+- git merge main
+- git push origin deploy
