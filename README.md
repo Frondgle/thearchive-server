@@ -22,3 +22,4 @@ In loving memory of emosurrealist Alex Cheng. Emosurrealism lives on. ♡
 ### Dev Contributors:
 * [A.J. Gonzalez](https://github.com/gonzalez-aj)
 * [Eric L Frey](https://github.com/ericlfrey)
+* [Charles Bridgers IV](https://github.com/SeaForeEx)
