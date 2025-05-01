@@ -46,8 +46,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['the-sonatore-archive-840804772ccc.herokuapp.com']
 
 # Application definition
 
