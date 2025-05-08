@@ -46,7 +46,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = ['the-sonatore-archive-840804772ccc.herokuapp.com']
+ALLOWED_HOSTS = [
+    'the-sonatore-archive-840804772ccc.herokuapp.com',  # Heroku backend domain
+    'api.thesonatorearchive.org',  # Backend subdomain
+    'www.thesonatorearchive.org',  # Frontend domain
+]
 
 # Application definition
 
@@ -83,13 +87,16 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'https://www.thesonatorearchive.org',
     'https://thesonatorearchive.org',
+    'https://api.thesonatorearchive.org',
     'https://the-sonatore-archive-client-08df369abde2.herokuapp.com',
     'https://the-sonatore-archive-840804772ccc.herokuapp.com'
 ]
 
 CORS_ALLOW_METHODS = [
     "GET",
+    "OPTIONS"
 ]
 
 CORS_ALLOW_HEADERS = [
