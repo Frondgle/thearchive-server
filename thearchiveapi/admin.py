@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Art, Tag
+from .models import Art, Tag, Subscriber
 from .forms import ArtForm
 
 # Register your models here.
@@ -18,3 +18,9 @@ class ArtAdmin(admin.ModelAdmin):
     def display_tags(self, instance):
         return ", ".join([tag.category for tag in instance.tags.all()])
     display_tags.short_description = 'Tags'  # Set the column name in the admin
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ['email', 'subscribed_at']
+    search_fields = ['email']
+    readonly_fields = ['subscribed_at']

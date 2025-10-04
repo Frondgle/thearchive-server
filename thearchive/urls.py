@@ -17,7 +17,7 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
-from thearchiveapi.views import register_user, check_user, TagView, ArtView
+from thearchiveapi.views import register_user, check_user, TagView, ArtView, SubscriberView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'tags', TagView, 'tag')
@@ -27,5 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('register', register_user),
     path('checkuser', check_user),
+    path('api/subscribe/', SubscriberView.as_view(), name='subscribe'),
     path('', include(router.urls)),
 ]
