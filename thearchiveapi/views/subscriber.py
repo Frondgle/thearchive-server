@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django.views import View
 from django.utils.decorators import method_decorator
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 import json
 from thearchiveapi.models import Subscriber
@@ -20,6 +22,13 @@ class SubscriberView(View):
             if not email:
                 print("No email provided!")
                 return JsonResponse({'success': False, 'message': 'Email is required'}, status=400)
+            
+            # Validate email format
+            try:
+                validate_email(email)
+            except ValidationError:
+                print("Invalid email format!")
+                return JsonResponse({'success': False, 'message': 'Invalid email format'}, status=400)
             
             subscriber, created = Subscriber.objects.get_or_create(email=email)
             

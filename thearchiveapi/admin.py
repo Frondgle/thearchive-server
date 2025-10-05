@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Art, Tag, Subscriber
+from .models import Art, Tag, Subscriber, ContactMessage
 from .forms import ArtForm
 
 # Register your models here.
@@ -24,3 +24,18 @@ class SubscriberAdmin(admin.ModelAdmin):
     list_display = ['email', 'subscribed_at']
     search_fields = ['email']
     readonly_fields = ['subscribed_at']
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'sent_at', 'short_content')
+    list_filter = ('sent_at',)
+    search_fields = ('name', 'email', 'content')
+    readonly_fields = ('sent_at',)
+    ordering = ('-sent_at',)
+    
+    # Shows fields when viewing/editing individual message
+    fields = ('name', 'email', 'content', 'sent_at')
+    
+    def short_content(self, obj):
+        return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
+    short_content.short_description = 'Message Preview'
