@@ -13,6 +13,7 @@ pylint-django = "==2.5.3"
 gunicorn = "*"
 django-on-heroku = "*"
 cloudinary = "*"
+python-decouple = "*"
 
 [dev-packages]
 
