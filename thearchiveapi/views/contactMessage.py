@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail  # ADD THIS
+from django.conf import settings  # ADD THIS
 import json
 from thearchiveapi.models import ContactMessage
 
@@ -51,6 +53,34 @@ class ContactMessageView(View):
                 content=content
             )
             contact_message.save()
+            
+            # Send email notification - ADD THIS ENTIRE SECTION
+            try:
+                email_subject = f'New Contact Message from {name}'
+                email_body = f"""
+New contact form submission from The Sonatore Archive:
+
+Name: {name}
+Email: {email if email else 'Not provided'}
+
+Message:
+{content}
+
+---
+Sent at: {contact_message.sent_at}
+                """
+                
+                send_mail(
+                    subject=email_subject,
+                    message=email_body,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.EMAIL_HOST_USER],  # Sends to your Gmail
+                    fail_silently=False,
+                )
+                print(f"Email sent successfully for message from {name}")
+            except Exception as e:
+                # Log email error but don't fail the request
+                print(f"Email sending error: {str(e)}")
             
             return JsonResponse({
                 'success': True,
