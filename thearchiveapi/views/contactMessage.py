@@ -4,8 +4,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.core.mail import send_mail  # ADD THIS
-from django.conf import settings  # ADD THIS
+from django.core.mail import send_mail
+from django.conf import settings
 import json
 from thearchiveapi.models import ContactMessage
 
