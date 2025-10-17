@@ -5,7 +5,7 @@ from .tag import Tag
 
 
 class Art(models.Model):
-    pic = CloudinaryField('pic', folder='the-archive/')
+    pic = CloudinaryField("pic", folder="the-archive/")
     title = models.CharField(max_length=250, null=True, blank=True)
     code = models.CharField(max_length=100)
     style = models.CharField(max_length=100)
@@ -17,8 +17,7 @@ class Art(models.Model):
     date_created = models.DateField(null=True, blank=True)
     film_type = models.CharField(max_length=100)
     malfunction = models.BooleanField(default=False)
-    tags = models.ManyToManyField(
-        Tag, through='ArtTag', related_name='art', blank=True)
+    tags = models.ManyToManyField(Tag, through="ArtTag", related_name="art", blank=True)
 
     def delete(self, *args, **kwargs):
         # Delete the Cloudinary image associated with this Art object

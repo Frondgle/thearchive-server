@@ -1,16 +1,16 @@
 [
-  {
-      "model": "thearchiveapi.tag",
-      "pk": 1,
-      "fields": {
-          "category": "emosurrealism"
-      }
-  },
-  {
-    "model": "thearchiveapi.tag",
-    "pk": 2,
-    "fields": {
-        "category": "painting"
+    {
+        "model": "thearchiveapi.tag",
+        "pk": 1,
+        "fields": {
+            "category": "emosurrealism"
+        }
+    },
+    {
+        "model": "thearchiveapi.tag",
+        "pk": 2,
+        "fields": {
+            "category": "painting"
+        }
     }
-}
 ]

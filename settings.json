@@ -1,6 +1,16 @@
 {
     "python.linting.pylintArgs": [
         "--load-plugins=pylint_django",
-        "--django-settings-module=thearchive.settings",
+        "--django-settings-module=thearchive.settings"
     ],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
 }
