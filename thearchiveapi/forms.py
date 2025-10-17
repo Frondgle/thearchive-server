@@ -11,4 +11,4 @@ class ArtForm(forms.ModelForm):
 
     class Meta:
         model = Art
-        fields = '__all__'
+        fields = "__all__"

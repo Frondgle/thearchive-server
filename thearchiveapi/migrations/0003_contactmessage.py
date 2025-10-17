@@ -6,23 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('thearchiveapi', '0002_subscriber'),
+        ("thearchiveapi", "0002_subscriber"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ContactMessage',
+            name="ContactMessage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('email', models.EmailField(blank=True, max_length=255, null=True)),
-                ('content', models.TextField()),
-                ('sent_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("email", models.EmailField(blank=True, max_length=255, null=True)),
+                ("content", models.TextField()),
+                ("sent_at", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'verbose_name': 'Contact Message',
-                'verbose_name_plural': 'Contact Messages',
-                'ordering': ['-sent_at'],
+                "verbose_name": "Contact Message",
+                "verbose_name_plural": "Contact Messages",
+                "ordering": ["-sent_at"],
             },
         ),
     ]

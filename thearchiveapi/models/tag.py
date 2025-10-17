@@ -5,9 +5,9 @@ from django.db.models.functions import Lower
 class Tag(models.Model):
     category = models.CharField(max_length=255)
 
-    class Meta: 
+    class Meta:
         constraints = [
-            models.UniqueConstraint(Lower('category'), name='unique_lower_category')
+            models.UniqueConstraint(Lower("category"), name="unique_lower_category")
         ]
 
     def __str__(self):
