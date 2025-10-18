@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
+from django.conf import settings
 import json
 from thearchiveapi.models import Subscriber
 
@@ -38,6 +40,33 @@ class SubscriberView(View):
 
             if created:
                 print("New subscriber created!")
+
+                # Send welcome email to new subscriber
+                try:
+                    email_subject = "Welcome to The Sonatore Archive!"
+                    email_body = f"""
+                        Thank you for subscribing to The Sonatore Archive!
+
+                        You'll now receive updates about new content, features, and announcements.
+
+                        If you didn't sign up for this, please ignore this email.
+
+                        Best regards,
+                        The Sonatore Archive Team
+                    """
+                    
+                    send_mail(
+                        subject=email_subject,
+                        message=email_body,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[email],  # Send to the subscriber
+                        fail_silently=False,
+                    )
+                    print(f"Welcome email sent to {email}")
+                except Exception as e:
+                    # Log email error but don't fail the subscription
+                    print(f"Email sending error: {str(e)}")
+
                 return JsonResponse(
                     {"success": True, "message": "Successfully subscribed!"}
                 )
