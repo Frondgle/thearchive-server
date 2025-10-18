@@ -4,23 +4,22 @@ from django.utils.decorators import method_decorator
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from urllib.parse import quote
 import json
 from thearchiveapi.models import Subscriber
-
 
 @method_decorator(csrf_exempt, name="dispatch")
 class SubscriberView(View):
 
     def post(self, request):
         try:
-            print("Request body:", request.body)  # See raw data
+            print("Request body:", request.body)
             data = json.loads(request.body)
-            print("Parsed data:", data)  # See parsed JSON
+            print("Parsed data:", data)
             email = data.get("email")
-            print("Email:", email)  # See email value
+            print("Email:", email)
 
             if not email:
                 print("No email provided!")
@@ -49,24 +48,46 @@ class SubscriberView(View):
                     unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?email={encoded_email}"
 
                     email_subject = "Welcome to The Sonatore Archive!"
-                    email_body = f"""
+                    
+                    # Plain text version (fallback)
+                    text_body = f"""
                         Thank you for subscribing to The Sonatore Archive!
 
                         You'll now receive updates about new content, features, and announcements.
 
-                        If you didn't sign up for this, or if you wish to unsubscribe, click here: {unsubscribe_url}
+                        If you didn't sign up for this, or if you wish to unsubscribe, click the following link: {unsubscribe_url}
 
                         Best regards,
                         The Sonatore Archive Team
                     """
                     
-                    send_mail(
+                    # HTML version (with clickable link)
+                    html_body = f"""
+                        <html>
+                            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                                <p>Thank you for subscribing to The Sonatore Archive!</p>
+                                
+                                <p>You'll now receive updates about new content, features, and announcements.</p>
+                                
+                                <p>If you didn't sign up for this, or if you wish to unsubscribe, 
+                                click <a href="{unsubscribe_url}" style="color: #2196F3;">HERE</a>.</p>
+                                
+                                <p>Best regards,<br>
+                                The Sonatore Archive Team</p>
+                            </body>
+                        </html>
+                    """
+                    
+                    # Create email with both text and HTML versions
+                    email_message = EmailMultiAlternatives(
                         subject=email_subject,
-                        message=email_body,
+                        body=text_body,
                         from_email=settings.DEFAULT_FROM_EMAIL,
-                        recipient_list=[email],  # Send to the subscriber
-                        fail_silently=False,
+                        to=[email]
                     )
+                    email_message.attach_alternative(html_body, "text/html")
+                    email_message.send(fail_silently=False)
+                    
                     print(f"Welcome email sent to {email}")
                 except Exception as e:
                     # Log email error but don't fail the subscription
