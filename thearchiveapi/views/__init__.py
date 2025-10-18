@@ -3,3 +3,4 @@ from .tag import TagView
 from .art import ArtView
 from .subscriber import SubscriberView
 from .contactMessage import ContactMessageView
+from .unsubscribe import UnsubscribeView

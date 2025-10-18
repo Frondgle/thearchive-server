@@ -196,3 +196,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
+
+# Site URL for unsubscribe links (Frontend)
+SITE_URL = 'http://localhost:3000' if DEBUG else 'https://thesonatorearchive.org'
