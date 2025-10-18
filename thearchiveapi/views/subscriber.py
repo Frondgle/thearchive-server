@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
+from urllib.parse import quote
 import json
 from thearchiveapi.models import Subscriber
 
@@ -43,13 +44,17 @@ class SubscriberView(View):
 
                 # Send welcome email to new subscriber
                 try:
+                    # URL encode the email for the unsubscribe link
+                    encoded_email = quote(email)
+                    unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?email={encoded_email}"
+
                     email_subject = "Welcome to The Sonatore Archive!"
                     email_body = f"""
                         Thank you for subscribing to The Sonatore Archive!
 
                         You'll now receive updates about new content, features, and announcements.
 
-                        If you didn't sign up for this, please ignore this email.
+                        If you didn't sign up for this, or if you wish to unsubscribe, click here: {unsubscribe_url}
 
                         Best regards,
                         The Sonatore Archive Team

@@ -24,6 +24,7 @@ from thearchiveapi.views import (
     TagView,
     ArtView,
     SubscriberView,
+    UnsubscribeView,
     ContactMessageView,
 )
 
@@ -36,6 +37,7 @@ urlpatterns = [
     path("register", register_user),
     path("checkuser", check_user),
     path("api/subscribe/", SubscriberView.as_view(), name="subscribe"),
+    path("api/unsubscribe/", UnsubscribeView.as_view(), name="unsubscribe"),
     path("api/contact/", ContactMessageView.as_view(), name="contact"),
     path("", include(router.urls)),
 ]
