@@ -12,27 +12,28 @@ class UnsubscribeView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)
-            email = data.get('email')
+            token = data.get('token')
             
-            if not email:
+            if not token:
                 return JsonResponse(
-                    {"success": False, "message": "Email is required"}, 
+                    {"success": False, "message": "Invalid unsubscribe link"}, 
                     status=400
                 )
             
             try:
-                subscriber = Subscriber.objects.get(email=email)
+                subscriber = Subscriber.objects.get(unsubscribe_token=token)
+                # email = subscriber.email
                 subscriber.delete()
-                print(f"Subscriber {email} deleted successfully")
+                print(f"Subscriber deleted successfully")
                 
                 return JsonResponse({
                     "success": True, 
-                    "message": "Successfully unsubscribed"
+                    "message": f"User has been successfully unsubscribed"
                 })
             
             except Subscriber.DoesNotExist:
                 return JsonResponse(
-                    {"success": False, "message": "Email not found"}, 
+                    {"success": False, "message": "Invalid or expired unsubscribe link"},  
                     status=404
                 )
         
