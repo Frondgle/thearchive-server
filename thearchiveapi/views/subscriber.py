@@ -43,9 +43,8 @@ class SubscriberView(View):
 
                 # Send welcome email to new subscriber
                 try:
-                    # URL encode the email for the unsubscribe link
-                    encoded_email = quote(email)
-                    unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?email={encoded_email}"
+                    # Use token instead of email in URL
+                    unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?token={subscriber.unsubscribe_token}"
 
                     email_subject = "Welcome to The Sonatore Archive!"
                     
