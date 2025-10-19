@@ -199,4 +199,4 @@ DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
 
 # Site URL for unsubscribe links (Frontend)
 # SITE_URL = 'http://localhost:3000' 
-SITE_URL = 'https://thesonatorearchive.org'
+SITE_URL = 'https://www.thesonatorearchive.org'

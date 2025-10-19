@@ -45,7 +45,7 @@ class SubscriberView(View):
                 try:
                     # URL encode the email for the unsubscribe link
                     encoded_email = quote(email)
-                    unsubscribe_url = f"https://www.thesonatorearchive.org/unsubscribe/unsubscribe/?email={encoded_email}"
+                    unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?email={encoded_email}"
 
                     email_subject = "Welcome to The Sonatore Archive!"
                     
