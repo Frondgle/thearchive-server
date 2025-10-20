@@ -1,45 +1,39 @@
-from django.http import JsonResponse
-from django.views import View
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from thearchiveapi.models import Subscriber
 
-
-@method_decorator(csrf_exempt, name="dispatch")
-class UnsubscribeView(View):
+class UnsubscribeView(APIView):
+    """Handle unsubscribe requests via token"""
     
-    def post(self, request):
+    def delete(self, request): 
+        token = request.query_params.get('token') 
+        
+        if not token:
+            return Response(
+                {"success": False, "message": "Invalid unsubscribe link"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         try:
-            data = json.loads(request.body)
-            token = data.get('token')
+            subscriber = Subscriber.objects.get(unsubscribe_token=token)
+            subscriber.delete()
+            print("Subscriber deleted successfully")
             
-            if not token:
-                return JsonResponse(
-                    {"success": False, "message": "Invalid unsubscribe link"}, 
-                    status=400
-                )
-            
-            try:
-                subscriber = Subscriber.objects.get(unsubscribe_token=token)
-                # email = subscriber.email
-                subscriber.delete()
-                print(f"Subscriber deleted successfully")
-                
-                return JsonResponse({
-                    "success": True, 
-                    "message": f"User has been successfully unsubscribed"
-                })
-            
-            except Subscriber.DoesNotExist:
-                return JsonResponse(
-                    {"success": False, "message": "Invalid or expired unsubscribe link"},  
-                    status=404
-                )
+            return Response({
+                "success": True, 
+                "message": "User has been successfully unsubscribed"
+            })
+        
+        except Subscriber.DoesNotExist:
+            return Response(
+                {"success": False, "message": "Invalid or expired unsubscribe link"},  
+                status=status.HTTP_404_NOT_FOUND
+            )
         
         except Exception as e:
             print(f"Error unsubscribing: {str(e)}")
-            return JsonResponse(
+            return Response(
                 {"success": False, "message": "An error occurred"}, 
-                status=500
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

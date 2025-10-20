@@ -1,30 +1,25 @@
-from django.http import JsonResponse
-from django.views import View
-from django.utils.decorators import method_decorator
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-from urllib.parse import quote
-import json
 from thearchiveapi.models import Subscriber
 
-@method_decorator(csrf_exempt, name="dispatch")
-class SubscriberView(View):
+class SubscribeView(APIView):
+    """Handle email subscription requests"""
 
     def post(self, request):
         try:
-            print("Request body:", request.body)
-            data = json.loads(request.body)
-            print("Parsed data:", data)
-            email = data.get("email")
+            email = request.data.get("email")  # ← DRF auto-parses JSON
             print("Email:", email)
 
             if not email:
                 print("No email provided!")
-                return JsonResponse(
-                    {"success": False, "message": "Email is required"}, status=400
+                return Response(
+                    {"success": False, "message": "Email is required"}, 
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
             # Validate email format
@@ -32,8 +27,9 @@ class SubscriberView(View):
                 validate_email(email)
             except ValidationError:
                 print("Invalid email format!")
-                return JsonResponse(
-                    {"success": False, "message": "Invalid email format"}, status=400
+                return Response(
+                    {"success": False, "message": "Invalid email format"}, 
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
             subscriber, created = Subscriber.objects.get_or_create(email=email)
@@ -43,12 +39,10 @@ class SubscriberView(View):
 
                 # Send welcome email to new subscriber
                 try:
-                    # Use token instead of email in URL
                     unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?token={subscriber.unsubscribe_token}"
 
                     email_subject = "Welcome to The Sonatore Archive!"
                     
-                    # Plain text version (fallback)
                     text_body = f"""
                         Thank you for subscribing to The Sonatore Archive!
 
@@ -60,7 +54,6 @@ class SubscriberView(View):
                         The Sonatore Archive Team
                     """
                     
-                    # HTML version (with clickable link)
                     html_body = f"""
                         <html>
                             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
@@ -77,7 +70,6 @@ class SubscriberView(View):
                         </html>
                     """
                     
-                    # Create email with both text and HTML versions
                     email_message = EmailMultiAlternatives(
                         subject=email_subject,
                         body=text_body,
@@ -89,19 +81,22 @@ class SubscriberView(View):
                     
                     print(f"Welcome email sent to {email}")
                 except Exception as e:
-                    # Log email error but don't fail the subscription
                     print(f"Email sending error: {str(e)}")
 
-                return JsonResponse(
-                    {"success": True, "message": "Successfully subscribed!"}
+                return Response(
+                    {"success": True, "message": "Successfully subscribed!"},
+                    status=status.HTTP_201_CREATED  # ← 201 for resource creation
                 )
             else:
                 print("Email already exists!")
-                return JsonResponse(
+                return Response(
                     {"success": False, "message": "Email already subscribed"},
-                    status=400,
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
         except Exception as e:
             print("Error:", str(e))
-            return JsonResponse({"success": False, "message": str(e)}, status=500)
+            return Response(
+                {"success": False, "message": "An error occurred"}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
