@@ -38,3 +38,8 @@ In loving memory of emosurrealist Alex Cheng. Emosurrealism lives on. ♡
 - git checkout deploy
 - git merge main
 - git push origin deploy
+- **If you changed models:** run `heroku run python manage.py migrate` to apply database changes
+
+#### Important Notes
+- **Always run migrations on Heroku after changing models** - Your local migrations won't automatically apply to production
+- To verify migrations worked: `heroku run python manage.py showmigrations`

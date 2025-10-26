@@ -99,10 +99,25 @@ CORS_ALLOWED_ORIGINS = [
     "https://the-sonatore-archive-840804772ccc.herokuapp.com",
 ]
 
-CORS_ALLOW_METHODS = ["GET", "OPTIONS"]
+CORS_ALLOW_METHODS = [
+    'DELETE',   # ← Add this
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',     # ← Add this
+    'PUT',
+]
 
 CORS_ALLOW_HEADERS = [
-    "content-type",
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 ROOT_URLCONF = "thearchive.urls"
@@ -200,3 +215,5 @@ DEFAULT_FROM_EMAIL = config("EMAIL_HOST_USER")
 # Site URL for unsubscribe links (Frontend)
 # SITE_URL = 'http://localhost:3000' 
 SITE_URL = 'https://www.thesonatorearchive.org'
+# BACKEND_URL = 'http://localhost:8000'
+BACKEND_URL = 'https://api.thesonatorearchive.org'
