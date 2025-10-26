@@ -6,13 +6,14 @@ from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from thearchiveapi.models import Subscriber
+from django.shortcuts import redirect
 
 class SubscribeView(APIView):
     """Handle email subscription requests"""
 
     def post(self, request):
         try:
-            email = request.data.get("email")  # ← DRF auto-parses JSON
+            email = request.data.get("email")
             print("Email:", email)
 
             if not email:
@@ -37,18 +38,19 @@ class SubscribeView(APIView):
             if created:
                 print("New subscriber created!")
 
-                # Send welcome email to new subscriber
+                # Send CONFIRMATION email
                 try:
-                    unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?token={subscriber.unsubscribe_token}"
+                    confirm_url = f"{settings.BACKEND_URL}/api/subscribe/confirm/?token={subscriber.subscribe_token}"
 
-                    email_subject = "Welcome to The Sonatore Archive!"
+                    email_subject = "Confirm Your Subscription to The Sonatore Archive"
                     
                     text_body = f"""
                         Thank you for subscribing to The Sonatore Archive!
 
-                        You'll now receive updates about new content, features, and announcements.
+                        Please confirm your subscription by clicking the following link:
+                        {confirm_url}
 
-                        If you didn't sign up for this, or if you wish to unsubscribe, click the following link: {unsubscribe_url}
+                        If you didn't sign up for this, you can safely ignore this email.
 
                         Best regards,
                         The Sonatore Archive Team
@@ -59,10 +61,11 @@ class SubscribeView(APIView):
                             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                                 <p>Thank you for subscribing to The Sonatore Archive!</p>
                                 
-                                <p>You'll now receive updates about new content, features, and announcements.</p>
+                                <p>Please confirm your subscription by clicking the link below:</p>
                                 
-                                <p>If you didn't sign up for this, or if you wish to unsubscribe, 
-                                click <a href="{unsubscribe_url}" style="color: #2196F3;">HERE</a>.</p>
+                                <p><a href="{confirm_url}" style="background-color: #2196F3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">Confirm Subscription</a></p>
+                                
+                                <p style="color: #666; font-size: 14px;">If you didn't sign up for this, you can safely ignore this email.</p>
                                 
                                 <p>Best regards,<br>
                                 The Sonatore Archive Team</p>
@@ -79,20 +82,77 @@ class SubscribeView(APIView):
                     email_message.attach_alternative(html_body, "text/html")
                     email_message.send(fail_silently=False)
                     
-                    print(f"Welcome email sent to {email}")
+                    print(f"Confirmation email sent to {email}")
                 except Exception as e:
                     print(f"Email sending error: {str(e)}")
 
                 return Response(
-                    {"success": True, "message": "Successfully subscribed!"},
-                    status=status.HTTP_201_CREATED  # ← 201 for resource creation
+                    {"success": True, "message": "Please check your email to confirm your subscription!"},
+                    status=status.HTTP_201_CREATED
                 )
             else:
-                print("Email already exists!")
-                return Response(
-                    {"success": False, "message": "Email already subscribed"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                # Email already exists - check if confirmed
+                if subscriber.is_confirmed:
+                    print("Email already confirmed!")
+                    return Response(
+                        {"success": False, "message": "Email already subscribed"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                else:
+                    print("Email exists but not confirmed - resending confirmation")
+                    
+                    # Resend confirmation email
+                    try:
+                        confirm_url = f"{settings.BACKEND_URL}/api/subscribe/confirm/?token={subscriber.subscribe_token}"
+
+                        email_subject = "Confirm Your Subscription to The Sonatore Archive"
+                        
+                        text_body = f"""
+                            Thank you for subscribing to The Sonatore Archive!
+
+                            Please confirm your subscription by clicking the following link:
+                            {confirm_url}
+
+                            If you didn't sign up for this, you can safely ignore this email.
+
+                            Best regards,
+                            The Sonatore Archive Team
+                        """
+                        
+                        html_body = f"""
+                            <html>
+                                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                                    <p>Thank you for subscribing to The Sonatore Archive!</p>
+                                    
+                                    <p>Please confirm your subscription by clicking the link below:</p>
+                                    
+                                    <p><a href="{confirm_url}" style="background-color: #2196F3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">Confirm Subscription</a></p>
+                                    
+                                    <p style="color: #666; font-size: 14px;">If you didn't sign up for this, you can safely ignore this email.</p>
+                                    
+                                    <p>Best regards,<br>
+                                    The Sonatore Archive Team</p>
+                                </body>
+                            </html>
+                        """
+                        
+                        email_message = EmailMultiAlternatives(
+                            subject=email_subject,
+                            body=text_body,
+                            from_email=settings.DEFAULT_FROM_EMAIL,
+                            to=[email]
+                        )
+                        email_message.attach_alternative(html_body, "text/html")
+                        email_message.send(fail_silently=False)
+                        
+                        print(f"Confirmation email resent to {email}")
+                    except Exception as e:
+                        print(f"Email sending error: {str(e)}")
+                    
+                    return Response(
+                        {"success": True, "message": "Confirmation email resent! Please check your inbox."},
+                        status=status.HTTP_200_OK
+                    )
 
         except Exception as e:
             print("Error:", str(e))
@@ -100,3 +160,31 @@ class SubscribeView(APIView):
                 {"success": False, "message": "An error occurred"}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+class ConfirmSubscriptionView(APIView):
+    """Confirm subscription via token and redirect to frontend"""
+
+    def get(self, request):
+        token = request.query_params.get("token")
+        
+        if not token:
+            return redirect(f"{settings.SITE_URL}/subscriptionConfirmed/subscriptionConfirmed?success=false")
+
+        try:
+            subscriber = Subscriber.objects.get(subscribe_token=token)
+            
+            if subscriber.is_confirmed:
+                # Already confirmed
+                return redirect(f"{settings.SITE_URL}/subscriptionConfirmed/subscriptionConfirmed?success=true&already=true")
+            
+            # Confirm the subscription
+            subscriber.is_confirmed = True
+            subscriber.save()
+            
+            print(f"Subscription confirmed for {subscriber.email}")
+            
+            return redirect(f"{settings.SITE_URL}/subscriptionConfirmed/subscriptionConfirmed?success=true")
+            
+        except Subscriber.DoesNotExist:
+            print("Invalid token")
+            return redirect(f"{settings.SITE_URL}/subscriptionConfirmed/subscriptionConfirmed?success=false")

@@ -24,6 +24,7 @@ from thearchiveapi.views import (
     TagView,
     ArtView,
     SubscribeView,
+    ConfirmSubscriptionView,
     UnsubscribeView,
     ContactMessageView,
 )
@@ -37,6 +38,7 @@ urlpatterns = [
     path("register", register_user),
     path("checkuser", check_user),
     path("api/subscribe/", SubscribeView.as_view(), name="subscribe"),
+    path('api/subscribe/confirm/', ConfirmSubscriptionView.as_view(), name='confirm-subscription'),
     path("api/unsubscribe/", UnsubscribeView.as_view(), name="unsubscribe"),
     path("api/contact/", ContactMessageView.as_view(), name="contact"),
     path("", include(router.urls)),
