@@ -86,18 +86,12 @@ class SubscribeView(APIView):
                 except Exception as e:
                     print(f"Email sending error: {str(e)}")
 
-                return Response(
-                    {"success": True, "message": "Please check your email to confirm your subscription!"},
-                    status=status.HTTP_201_CREATED
-                )
             else:
                 # Email already exists - check if confirmed
                 if subscriber.is_confirmed:
                     print("Email already confirmed!")
-                    return Response(
-                        {"success": False, "message": "Email already subscribed"},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
+                    # Don't send another email, they're already subscribed
+                    
                 else:
                     print("Email exists but not confirmed - resending confirmation")
                     
@@ -148,11 +142,12 @@ class SubscribeView(APIView):
                         print(f"Confirmation email resent to {email}")
                     except Exception as e:
                         print(f"Email sending error: {str(e)}")
-                    
-                    return Response(
-                        {"success": True, "message": "Confirmation email resent! Please check your inbox."},
-                        status=status.HTTP_200_OK
-                    )
+
+            # SAME MESSAGE FOR ALL SCENARIOS - prevents user enumeration
+            return Response(
+                {"success": True, "message": "Please check your email for confirmation instructions."},
+                status=status.HTTP_200_OK
+            )
 
         except Exception as e:
             print("Error:", str(e))
