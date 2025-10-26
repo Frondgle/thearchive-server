@@ -177,6 +177,65 @@ class ConfirmSubscriptionView(APIView):
             subscriber.save()
             
             print(f"Subscription confirmed for {subscriber.email}")
+
+            # Send welcome email with unsubscribe option
+            try:
+                unsubscribe_url = f"{settings.SITE_URL}/unsubscribe/unsubscribe/?token={subscriber.unsubscribe_token}"
+
+                email_subject = "Welcome to The Sonatore Archive!"
+                
+                text_body = f"""
+                    Welcome to The Sonatore Archive!
+
+                    Your subscription has been confirmed. You'll now receive updates about new content, features, and announcements.
+
+                    We're excited to have you as part of our community!
+
+                    If you wish to unsubscribe at any time, click the following link: {unsubscribe_url}
+
+                    Best regards,
+                    The Sonatore Archive Team
+                """
+                
+                html_body = f"""
+                    <html>
+                        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                            <h2 style="color: #2196F3;">Welcome to The Sonatore Archive!</h2>
+                            
+                            <p>Your subscription has been confirmed. You'll now receive updates about new content, features, and announcements.</p>
+                            
+                            <p>We're excited to have you as part of our community!</p>
+                            
+                            <p style="margin-top: 30px;">
+                                <a href="{unsubscribe_url}" 
+                                   style="background-color: #666; color: white; padding: 10px 20px; 
+                                          text-decoration: none; border-radius: 4px; display: inline-block; font-size: 14px;">
+                                    Unsubscribe
+                                </a>
+                            </p>
+                            
+                            <p style="color: #999; font-size: 12px; margin-top: 30px;">
+                                You can unsubscribe at any time by clicking the button above.
+                            </p>
+                            
+                            <p>Best regards,<br>
+                            The Sonatore Archive Team</p>
+                        </body>
+                    </html>
+                """
+                
+                email_message = EmailMultiAlternatives(
+                    subject=email_subject,
+                    body=text_body,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[subscriber.email]
+                )
+                email_message.attach_alternative(html_body, "text/html")
+                email_message.send(fail_silently=False)
+                
+                print(f"Welcome email sent to {subscriber.email}")
+            except Exception as e:
+                print(f"Welcome email error: {str(e)}")
             
             return redirect(f"{settings.SITE_URL}/subscriptionConfirmed/subscriptionConfirmed?success=true")
             
