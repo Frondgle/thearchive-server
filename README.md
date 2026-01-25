@@ -24,6 +24,53 @@ In loving memory of emosurrealist Alex Cheng. Emosurrealism lives on. ♡
 * [Eric L Frey](https://github.com/ericlfrey)
 * [Charles Bridgers IV](https://github.com/SeaForeEx)
 
+## First Time Setup
+
+If you don't have a virtual environment set up yet:
+
+- Create a virtual environment:
+```bash
+   python3 -m venv venv
+```
+
+- Activate the virtual environment:
+```bash
+   source venv/bin/activate
+```
+
+- Install dependencies:
+```bash
+   pip install -r requirements.txt
+```
+
+- Run migrations:
+```bash
+   python3 manage.py migrate
+```
+
+- Run the server:
+```bash
+   python3 manage.py runserver
+```
+
+#### Steps to run the Python Server
+- Activate the virtual environment:
+```bash
+   source venv/bin/activate
+```
+
+- Run the Django development server:
+```bash
+   python3 manage.py runserver
+```
+
+- Access the application: Open your browser to `http://localhost:8000`
+
+- To deactivate the virtual environment when done:
+```bash
+   deactivate
+```
+
 #### Steps to deploy changes
 - git checkout -b branch-name
 - make changes to branch-name
